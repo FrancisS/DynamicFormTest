@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
+<composite:interface>
+    <composite:attribute name="formValuesMap"/>
+</composite:interface>
+
+<composite:implementation>
+    <c:forEach items="#{testBean.dynamicFormValueMap}" var="entry" >
+        <h:outputText value="#{entry.value.label}" id="#{entry.value.id}_label"/>
+        <c:if test="#{entry.value.type == 'TEXT'}">
+            <h:inputText value="#{testBean.dynamicFormValueMap[entry.key].value}" id="#{entry.value.id}" />
+        </c:if>
+        <c:if test="#{entry.value.type == 'SELECTONEMENU'}">
+            <h:selectOneMenu value="#{testBean.dynamicFormValueMap[entry.key].value}" id="#{entry.value.id}" >
+                <f:selectItems value="#{entry.value.values}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />
+            </h:selectOneMenu>
+        </c:if>
+        <br/>
+    </c:forEach>
+</composite:implementation>
+</html>
